@@ -16,4 +16,10 @@ return [
     "hello guys" => "أهلا بكم",
     "welcome" => "أهلا",
 
+    "OfferNameRequired" => "إسم العرض مطلوب",
+    "OfferNameUnique" => "إسم العرض موجود",
+    "PriceRequired" => "سعر العرض مطلوب",
+    "PriceNumeric" => "يجب أن يكون سعر العرض أرقام",
+    "DetailsRequired" => "تفاصيل العرض مطلوبة",
+
 ];

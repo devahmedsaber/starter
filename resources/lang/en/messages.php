@@ -15,4 +15,10 @@ return [
 
     "hello guys" => "hello guys",
     "welcome" => "welcome",
+
+    "OfferNameRequired" => "The offer name is required",
+    "OfferNameUnique" => "The offer name is already exist",
+    "PriceRequired" => "The price is required",
+    "PriceNumeric" => "The price must be numeric",
+    "DetailsRequired" => "The details is required",
 ];
