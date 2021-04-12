@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use LaravelLocalization;
 
 class CrudController extends Controller
 {
@@ -29,42 +31,53 @@ class CrudController extends Controller
         return view('offers.create');
     }
 
-    public function store(Request $request){
+    public function store(OfferRequest $request){
         // Validate Data Before Insert to DB.
 
-        $rules = $this->getRules();
-        $messages = $this->getMessages();
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        }
+//        $rules = $this->getRules();
+//        $messages = $this->getMessages();
+//
+//        $validator = Validator::make($request->all(), $rules, $messages);
+//        if ($validator->fails()){
+//            return redirect()->back()->withErrors($validator)->withInputs($request->all());
+//        }
 
         // Insert Data.
         Offer::create([
-            'name' => $request->name,
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
             'price' => $request->price,
-            'details' => $request->details,
+            'details_ar' => $request->details_ar,
+            'details_en' => $request->details_en,
         ]);
         return redirect()->back()->with(['success' => 'تم إضافة العرض بنجاح']);
     }
 
-    public function getRules(){
-        return $rules = [
-                    'name' => 'required|max:100|unique:offers,name',
-                    'price' => 'required|numeric',
-                    'details' => 'required',
-                ];
-    }
+//    public function getRules(){
+//        return $rules = [
+//                    'name' => 'required|max:100|unique:offers,name',
+//                    'price' => 'required|numeric',
+//                    'details' => 'required',
+//                ];
+//    }
+//
+//    public function getMessages(){
+//        return $messages = [
+//                    'name.required' => trans('messages.OfferNameRequired'),
+//                    'name.unique' => trans('messages.OfferNameUnique'),
+//                    'price.required' => trans('messages.PriceRequired'),
+//                    'price.numeric' => trans('messages.PriceNumeric'),
+//                    'details.required' => trans('messages.DetailsRequired'),
+//                ];
+//    }
 
-    public function getMessages(){
-        return $messages = [
-                    'name.required' => trans('messages.OfferNameRequired'),
-                    'name.unique' => trans('messages.OfferNameUnique'),
-                    'price.required' => trans('messages.PriceRequired'),
-                    'price.numeric' => trans('messages.PriceNumeric'),
-                    'details.required' => trans('messages.DetailsRequired'),
-                ];
+    public function getAllOffers(){
+        $offers = Offer::select(
+            'id',
+            'price',
+            'name_'.LaravelLocalization::getCurrentLocale().' as name',
+            'details_'.LaravelLocalization::getCurrentLocale().' as details')->get(); // Return Collection
+        return view('offers.all', compact('offers'));
     }
 
 }

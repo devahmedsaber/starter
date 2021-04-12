@@ -21,5 +21,15 @@ return [
     "PriceRequired" => "سعر العرض مطلوب",
     "PriceNumeric" => "يجب أن يكون سعر العرض أرقام",
     "DetailsRequired" => "تفاصيل العرض مطلوبة",
+    "AddYourOffer" => "أضف عرض جديد",
+    "OfferNameArInp" => "إسم العرض بالعربى",
+    "OfferNameEnInp" => "إسم العرض بالإنجليزى",
+    "OfferPriceInp" => "سعر العرض",
+    "OfferDetailsArInp" => "تفاصيل العرض بالعربى",
+    "OfferDetailsEnInp" => "تفاصيل العرض بالإنجليزى",
+    "SaveOfferBtn" => "حفظ العرض",
+    "OfferNameTable" => "إسم العرض",
+    "OfferPriceTable" => "سعر العرض",
+    "OfferDetailsTable" => "تفاصيل العرض",
 
 ];

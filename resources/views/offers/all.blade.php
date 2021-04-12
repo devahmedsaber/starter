@@ -86,61 +86,26 @@
             </div>
         </nav>
 
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title m-b-md">
-                    {{ trans('messages.AddYourOffer') }}
-                </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ trans('messages.OfferNameTable') }}</th>
+                <th scope="col">{{ trans('messages.OfferPriceTable') }}</th>
+                <th scope="col">{{ trans('messages.OfferDetailsTable') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($offers as $offer)
+                <tr>
+                    <th scope="row">{{ $offer->id }}</th>
+                    <td>{{ $offer->name }}</td>
+                    <td>{{ $offer->price }}</td>
+                    <td>{{ $offer->details }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
 
-                @if(Session::has('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ Session::get('success') }}
-                    </div>
-                @endif
-                <br>
-                <form method="POST" action="{{route('offers.store')}}">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="name_ar" class="form-label">{{ trans('messages.OfferNameArInp') }}</label>
-                        <input type="text" class="form-control" id="name_ar" name="name_ar">
-                        @error('name_ar')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="name_en" class="form-label">{{ trans('messages.OfferNameEnInp') }}</label>
-                        <input type="text" class="form-control" id="name_en" name="name_en">
-                        @error('name_en')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="offerprice" class="form-label">{{ trans('messages.OfferPriceInp') }}</label>
-                        <input type="text" class="form-control" id="offerprice" name="price">
-                        @error('price')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="details_ar" class="form-label">{{ trans('messages.OfferDetailsArInp') }}</label>
-                        <input type="text" class="form-control" id="details_ar" name="details_ar">
-                        @error('details_ar')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="details_en" class="form-label">{{ trans('messages.OfferDetailsEnInp') }}</label>
-                        <input type="text" class="form-control" id="details_en" name="details_en">
-                        @error('details_en')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary">{{ trans('messages.SaveOfferBtn') }}</button>
-                </form>
-
-
-
-            </div>
-        </div>
     </body>
 </html>
