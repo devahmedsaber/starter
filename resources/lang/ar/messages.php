@@ -31,5 +31,9 @@ return [
     "OfferNameTable" => "إسم العرض",
     "OfferPriceTable" => "سعر العرض",
     "OfferDetailsTable" => "تفاصيل العرض",
-
+    "Operations" => "العمليات",
+    "UpdateBtnTable" => "تحديث",
+    "EditYourOffer" => "تعديل العرض",
+    "EditOfferBtn" => "تعديل",
+    "PhotoField" => "إختر صورة",
 ];

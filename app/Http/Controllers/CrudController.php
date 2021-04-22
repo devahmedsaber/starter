@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoViewer;
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
+use App\Models\Video;
+use App\Traits\OfferTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use LaravelLocalization;
 
 class CrudController extends Controller
 {
+    use OfferTrait;
     public function __construct()
     {
 
@@ -42,8 +46,11 @@ class CrudController extends Controller
 //            return redirect()->back()->withErrors($validator)->withInputs($request->all());
 //        }
 
+        $file_name = $this->saveImage($request->photo, 'images/offers');
+
         // Insert Data.
         Offer::create([
+            'photo' => $file_name,
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'price' => $request->price,
@@ -52,6 +59,8 @@ class CrudController extends Controller
         ]);
         return redirect()->back()->with(['success' => 'تم إضافة العرض بنجاح']);
     }
+
+
 
 //    public function getRules(){
 //        return $rules = [
@@ -80,4 +89,27 @@ class CrudController extends Controller
         return view('offers.all', compact('offers'));
     }
 
+    public function editOffer($offer_id){
+        $offer = Offer::find($offer_id);
+        if (!$offer){
+            return redirect()-back();
+        }
+        $offer = Offer::select('id', 'name_ar', 'name_en', 'details_ar', 'details_en', 'price')->find($offer_id);
+        return view('offers.edit', compact('offer'));
+    }
+
+    public function updateOffer(OfferRequest $request, $offer_id){
+        $offer = Offer::find($offer_id);
+        if (!$offer){
+            return redirect()-back();
+        }
+        $offer->update($request->all());
+        return redirect()->back()->with(['success' => 'تم التحديث بنجاح']);
+    }
+
+    public function getVideo(){
+        $video = Video::first();
+        event(new VideoViewer($video));
+        return view('video')->with('video', $video);
+    }
 }

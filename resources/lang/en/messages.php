@@ -31,4 +31,9 @@ return [
     "OfferNameTable" => "Offer Name",
     "OfferPriceTable" => "Offer Price",
     "OfferDetailsTable" => "Offer Details",
+    "Operations" => "Opertaions",
+    "UpdateBtnTable" => "Update",
+    "EditYourOffer" => "Edit Offer",
+    "EditOfferBtn" => "Edit",
+    "PhotoField" => "Select Photo",
 ];

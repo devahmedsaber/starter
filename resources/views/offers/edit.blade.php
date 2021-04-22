@@ -89,7 +89,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    {{ trans('messages.AddYourOffer') }}
+                    {{ trans('messages.EditYourOffer') }}
                 </div>
 
                 @if(Session::has('success'))
@@ -98,51 +98,44 @@
                     </div>
                 @endif
                 <br>
-                <form method="POST" action="{{route('offers.store')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('offers.update', $offer->id)}}">
                     @csrf
                     <div class="mb-3">
-                        <label for="photo" class="form-label">{{ trans('messages.PhotoField') }}</label>
-                        <input type="file" class="form-control" id="photo" name="photo">
-                        @error('photo')
-                        <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
                         <label for="name_ar" class="form-label">{{ trans('messages.OfferNameArInp') }}</label>
-                        <input type="text" class="form-control" id="name_ar" name="name_ar">
+                        <input type="text" class="form-control" id="name_ar" name="name_ar" value="{{ $offer->name_ar }}">
                         @error('name_ar')
                         <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="name_en" class="form-label">{{ trans('messages.OfferNameEnInp') }}</label>
-                        <input type="text" class="form-control" id="name_en" name="name_en">
+                        <input type="text" class="form-control" id="name_en" name="name_en" value="{{ $offer->name_en }}">
                         @error('name_en')
                         <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="offerprice" class="form-label">{{ trans('messages.OfferPriceInp') }}</label>
-                        <input type="text" class="form-control" id="offerprice" name="price">
+                        <input type="text" class="form-control" id="offerprice" name="price" value="{{ $offer->price }}">
                         @error('price')
                         <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="details_ar" class="form-label">{{ trans('messages.OfferDetailsArInp') }}</label>
-                        <input type="text" class="form-control" id="details_ar" name="details_ar">
+                        <input type="text" class="form-control" id="details_ar" name="details_ar" value="{{ $offer->details_ar }}">
                         @error('details_ar')
                         <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="details_en" class="form-label">{{ trans('messages.OfferDetailsEnInp') }}</label>
-                        <input type="text" class="form-control" id="details_en" name="details_en">
+                        <input type="text" class="form-control" id="details_en" name="details_en" value="{{ $offer->details_en }}">
                         @error('details_en')
                         <small id="emailHelp" class="form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">{{ trans('messages.SaveOfferBtn') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ trans('messages.EditOfferBtn') }}</button>
                 </form>
 
 
