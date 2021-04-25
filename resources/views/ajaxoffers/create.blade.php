@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+
+        <div class="alert alert-success" id="success_msg" style="display: none">
+            تم الحفظ بنجاح
+        </div>
+
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
@@ -14,7 +19,7 @@
                     </div>
                 @endif
                 <br>
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form id="offerForm" method="POST" action="" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="photo" class="form-label">{{ trans('messages.PhotoField') }}</label>
@@ -72,20 +77,19 @@
     <script>
         $(document).on('click', '#saveOffer', function (e){
             e.preventDefault();
+            var formData = new FormData($('#offerForm')[0]);
             $.ajax({
                 type: 'post',
+                enctype: 'multipart/form-data',
                 url: "{{ route('ajax.offers.store') }}",
-                data: {
-                    '_token'     : "{{ csrf_token() }}",
-                    {{-- 'photo'      : $("input[name='photo']").val(), --}}
-                    'name_ar'    : $("input[name='name_ar']").val(),
-                    'name_en'    : $("input[name='name_en']").val(),
-                    'price'      : $("input[name='price']").val(),
-                    'details_ar' : $("input[name='details_ar']").val(),
-                    'details_en' : $("input[name='details_en']").val(),
-                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
                 success: function (data){
-
+                    if (data.status == true) {
+                        $('#success_msg').show();
+                    }
                 },
                 error: function (reject){
 
