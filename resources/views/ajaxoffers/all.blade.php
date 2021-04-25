@@ -1,101 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">{{ $properties['native'] }} <span class="sr-only">(current)</span></a>
-                        </li>
-                    @endforeach
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <a href="{{ route('offers.create') }}" class="btn btn-outline-success my-2 my-sm-0" type="submit">Create Offer</a>
-                </form>
-            </div>
-        </nav>
-
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                {{ Session::get('success') }}
-            </div>
-        @endif
-
-        @if(Session::has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ Session::get('error') }}
-            </div>
-        @endif
+    <div class="container">
+        <div class="alert alert-success" id="success_msg" style="display: none">
+            تم الحذف بنجاح
+        </div>
 
         <table class="table">
             <thead>
@@ -104,24 +14,53 @@
                 <th scope="col">{{ trans('messages.OfferNameTable') }}</th>
                 <th scope="col">{{ trans('messages.OfferPriceTable') }}</th>
                 <th scope="col">{{ trans('messages.OfferDetailsTable') }}</th>
+                <th scope="col">Photo</th>
                 <th scope="col">{{ trans('messages.Operations') }}</th>
             </tr>
             </thead>
             <tbody>
             @foreach($offers as $offer)
-                <tr>
+                <tr class="offerRow{{$offer->id}}">
                     <th scope="row">{{ $offer->id }}</th>
                     <td>{{ $offer->name }}</td>
                     <td>{{ $offer->price }}</td>
                     <td>{{ $offer->details }}</td>
+                    <td><img style="width: 30px;height:30px" src="{{ asset('images/offers/'.$offer->photo) }}"></td>
                     <td>
                         <a href="{{ url('offers/edit/'.$offer->id) }}" class="btn btn-success">{{ trans('messages.UpdateBtnTable') }}</a>
                         <a href="{{ route('offers.delete', $offer->id) }}" class="btn btn-danger">{{ trans('messages.DeleteBtnTable') }}</a>
+                        <a offer_id="{{ $offer->id }}" class="deleteBtn btn btn-danger">حذف بالأجاكس</a>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+    </div>
+@endsection
 
-    </body>
-</html>
+@section('scripts')
+    <script>
+        $(document).on('click', '.deleteBtn', function (e){
+            e.preventDefault();
+            var offer_id = $(this).attr('offer_id');
+            $.ajax({
+                type: 'post',
+                url: "{{ route('ajax.offers.delete') }}",
+                data: {
+                    '_token' : "{{ csrf_token() }}",
+                    'id' : offer_id
+                },
+                success: function (data){
+                    if (data.status == true) {
+                        $('#success_msg').show();
+                    }
+                    $('.offerRow'+data.id).remove();
+                },
+                error: function (reject){
+
+                }
+            });
+        });
+
+    </script>
+@endsection
