@@ -36,4 +36,7 @@ return [
     "EditYourOffer" => "Edit Offer",
     "EditOfferBtn" => "Edit",
     "PhotoField" => "Select Photo",
+    "DeleteBtnTable" => "Delete",
+    "OfferNotExist" => "The Offer Not Exist",
+    "OfferDeleted" => "The Offer Deleted Successfully",
 ];

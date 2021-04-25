@@ -36,4 +36,7 @@ return [
     "EditYourOffer" => "تعديل العرض",
     "EditOfferBtn" => "تعديل",
     "PhotoField" => "إختر صورة",
+    "DeleteBtnTable" => "حذف",
+    "OfferNotExist" => "العرض غير موجود",
+    "OfferDeleted" => "تم حذف العرض بنجاح",
 ];

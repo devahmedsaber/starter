@@ -98,6 +98,16 @@ class CrudController extends Controller
         return view('offers.edit', compact('offer'));
     }
 
+    public function delete($offer_id){
+        // Check If Offer ID Exists
+        $offer = Offer::find($offer_id);
+        if (!$offer){
+            return redirect()->back()->with(['error' => trans('messages.OfferNotExist')]);
+        }
+        $offer->delete();
+        return redirect()->route('offers.all')->with(['success' => trans('messages.OfferDeleted')]);
+    }
+
     public function updateOffer(OfferRequest $request, $offer_id){
         $offer = Offer::find($offer_id);
         if (!$offer){

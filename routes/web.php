@@ -32,16 +32,24 @@ Route::group(
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
     ], function(){
         Route::group(['prefix' => 'offers'], function (){
-            Route::get('create', 'CrudController@create');
+            Route::get('create', 'CrudController@create')->name('offers.create');
             Route::post('store', 'CrudController@store')->name('offers.store');
             Route::get('edit/{offer_id}', 'CrudController@editOffer');
             Route::post('update/{offer_id}', 'CrudController@updateOffer')->name('offers.update');
-            Route::get('all', 'CrudController@getAllOffers');
+            Route::get('delete/{offer_id}', 'CrudController@delete')->name('offers.delete');
+            Route::get('all', 'CrudController@getAllOffers')->name('offers.all');
         });
 
         Route::get('youtube', 'CrudController@getVideo');
 
 });
+
+################ Begin Ajax Routes #################
+Route::group(['prefix' => 'ajaxoffers'], function (){
+    Route::get('create', 'OfferController@create');
+    Route::post('store', 'OfferController@store')->name('ajax.offers.store');
+});
+################ End Ajax Routes #################
 
 
 
