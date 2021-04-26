@@ -30,6 +30,7 @@
                         <a href="{{ url('offers/edit/'.$offer->id) }}" class="btn btn-success">{{ trans('messages.UpdateBtnTable') }}</a>
                         <a href="{{ route('offers.delete', $offer->id) }}" class="btn btn-danger">{{ trans('messages.DeleteBtnTable') }}</a>
                         <a offer_id="{{ $offer->id }}" class="deleteBtn btn btn-danger">حذف بالأجاكس</a>
+                        <a href="{{route('ajax.offers.edit', $offer->id)}}" class="btn btn-success">تعديل بالأجاكس</a>
                     </td>
                 </tr>
             @endforeach

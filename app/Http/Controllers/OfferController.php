@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use App\Traits\OfferTrait;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use LaravelLocalization;
 
@@ -71,6 +72,34 @@ class OfferController extends Controller
             'msg' => 'تم الحذف بنجاح',
             'id' => $request->id,
 
+        ]);
+    }
+
+    public function edit(Request $request){
+        $offer = Offer::find($request->offer_id);
+        if (!$offer)
+            return response()->json([
+                'status' => false,
+                'msg' => 'هذا العرض غير موجود',
+
+            ]);
+
+        $offer = Offer::select('id', 'name_ar', 'name_en', 'details_ar', 'details_en', 'price')->find($request->offer_id);
+        return view('ajaxoffers.edit', compact('offer'));
+    }
+
+    public function update(Request $request){
+        $offer = Offer::find($request->offer_id);
+        if (!$offer)
+            return response()->json([
+                'status' => false,
+                'msg' => 'هذا العرض غير موجود',
+            ]);
+
+        $offer->update($request->all());
+        return response()->json([
+            'status' => true,
+            'msg' => 'تم التحديث بنجاح',
         ]);
     }
 }
