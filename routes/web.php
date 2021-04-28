@@ -25,6 +25,11 @@ Route::get('callback/{service}', 'SocialController@callback');
 
 Route::get('fillable', 'CrudController@getOffers');
 
+Route::get('dashboard', function (){
+    return "Not Adult";
+})->name('dashboard');
+
+
 
 Route::group(
     [
@@ -40,7 +45,7 @@ Route::group(
             Route::get('all', 'CrudController@getAllOffers')->name('offers.all');
         });
 
-        Route::get('youtube', 'CrudController@getVideo');
+        Route::get('youtube', 'CrudController@getVideo')->middleware('auth');
 
 });
 
@@ -56,6 +61,20 @@ Route::group(['prefix' => 'ajaxoffers'], function (){
     Route::post('update', 'OfferController@update')->name('ajax.offers.update');
 });
 ################ End Ajax Routes #################
+
+################ Start Middlewares Routes #################
+
+Route::group(['namespace' => 'Auth', 'middleware' => 'CheckAge'], function (){
+    Route::get('adaults', 'CustomAuthController@adault')->name('adault');
+});
+
+Route::get('site', 'Auth\CustomAuthController@site')->middleware('auth:web')->name('site');
+Route::get('admins', 'Auth\CustomAuthController@admin')->middleware('auth:admin')->name('admin');
+
+Route::get('admin/login', 'Auth\CustomAuthController@adminLogin')->name('admin.login');
+Route::post('admin/login', 'Auth\CustomAuthController@checkAdminLogin')->name('save.admin.login');
+
+################ End Middlewares Routes #################
 
 
 
