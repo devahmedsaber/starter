@@ -100,6 +100,7 @@ class RelationsController extends Controller
     }
 
     public function deleteHospital($hospital_id){
+        // OTM Relationship - Delete Hospital And All Doctors That In It.
         $hospital = Hospital::find($hospital_id);
         if (!$hospital)
             return abort('404');

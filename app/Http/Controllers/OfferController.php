@@ -17,7 +17,7 @@ class OfferController extends Controller
         // View Form To Add Offer
         return view('ajaxoffers.create');
     }
-    public function store(Request $request){
+    public function store(OfferRequest $request){
         // Save Offer Into DB Using Ajax
         $file_name = $this->saveImage($request->photo, 'images/offers');
 
