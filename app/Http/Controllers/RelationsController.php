@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\Hospital;
 use App\Models\Phone;
+use App\Models\Service;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -107,6 +108,20 @@ class RelationsController extends Controller
         $hospital->doctors()->delete();
         $hospital->delete();
         return redirect()->route('hospitals.all');
+    }
+
+    // Many To Many Methods
+
+    public function getDoctorServices(){
+       $doctor = Doctor::find(3);
+       return $doctor->services;
+    }
+
+    public function getServicesWithDoctor(){
+       $service = Service::with(['doctors' => function($q){
+            $q->select('doctors.id', 'name', 'title');
+       }])->find(1);
+       return $service;
     }
 }
 

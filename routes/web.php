@@ -91,7 +91,9 @@ Route::get('doctors/{hospital_id}', 'RelationsController@doctors')->name('hospit
 Route::get('hospitalsHasDoctors', 'RelationsController@hospitalsHasDoctors');
 Route::get('hospitalsHasMaleDoctors', 'RelationsController@hospitalsHasMaleDoctors');
 Route::get('hospitalsNotHasDoctors', 'RelationsController@hospitalsNotHasDoctors');
-
+## Many To Many Relations
+Route::get('doctors-services', 'RelationsController@getDoctorServices');
+Route::get('services-doctors', 'RelationsController@getServicesWithDoctor');
 ###################### End Relations Routes #########################
 
 
