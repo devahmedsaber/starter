@@ -76,6 +76,23 @@ Route::post('admin/login', 'Auth\CustomAuthController@checkAdminLogin')->name('s
 
 ################ End Middlewares Routes #################
 
+###################### Start Relations Routes #########################
+## One To One Relations
+Route::get('hasOne', 'RelationsController@hasOneRelation');
+Route::get('hasOneReverse', 'RelationsController@hasOneRelationReverse');
+Route::get('getUserHasPhones', 'RelationsController@getUserHasPhones');
+Route::get('getUserDoesntHavePhones', 'RelationsController@getUserDoesntHavePhones');
+Route::get('getUserHasPhonesWithCond', 'RelationsController@getUserHasPhonesWithCond');
+## One To Many Relations
+Route::get('hospital-has-many', 'RelationsController@getHospitalDoctors');
+Route::get('hospitals', 'RelationsController@hospitals')->name('hospitals.all');
+Route::get('hospital/{hospital_id}', 'RelationsController@deleteHospital')->name('hospital.delete');
+Route::get('doctors/{hospital_id}', 'RelationsController@doctors')->name('hospital.doctors');
+Route::get('hospitalsHasDoctors', 'RelationsController@hospitalsHasDoctors');
+Route::get('hospitalsHasMaleDoctors', 'RelationsController@hospitalsHasMaleDoctors');
+Route::get('hospitalsNotHasDoctors', 'RelationsController@hospitalsNotHasDoctors');
+
+###################### End Relations Routes #########################
 
 
 
