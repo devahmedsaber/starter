@@ -112,7 +112,7 @@ class RelationsController extends Controller
 
     // Many To Many Methods
 
-    public function getDoctorServices(){
+    public function getTheDoctorServices(){
        $doctor = Doctor::find(3);
        return $doctor->services;
     }
@@ -122,6 +122,24 @@ class RelationsController extends Controller
             $q->select('doctors.id', 'name', 'title');
        }])->find(1);
        return $service;
+    }
+
+    public function getDoctorServices($doctor_id){
+        $doctor = Doctor::find($doctor_id);
+        $services = $doctor->services; // Services Of Doctor
+        $doctors = Doctor::select('id', 'name')->get();
+        $allServices = Service::select('id', 'name')->get(); // All Services In DB
+        return view('doctors.services', compact('services', 'doctors', 'allServices'));
+    }
+
+    public function saveServicesToDoctors(Request $request){
+        $doctor = Doctor::find($request->doctor_id);
+        if (!$doctor)
+            return abort('404');
+        //$doctor->services()->attach($request->servicesIds); // Many To Many Insert Into DB.
+        //$doctor->services()->sync($request->servicesIds); // sync To Add New And Delete The Old Values
+        $doctor->services()->syncWithoutDetaching($request->servicesIds); // syncWithoutDetaching To Add New And Leave Old Values
+        return "Success";
     }
 }
 
