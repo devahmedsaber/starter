@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Doctor;
 use App\Models\Hospital;
+use App\Models\Patient;
 use App\Models\Phone;
 use App\Models\Service;
 use App\User;
@@ -140,6 +142,20 @@ class RelationsController extends Controller
         //$doctor->services()->sync($request->servicesIds); // sync To Add New And Delete The Old Values
         $doctor->services()->syncWithoutDetaching($request->servicesIds); // syncWithoutDetaching To Add New And Leave Old Values
         return "Success";
+    }
+
+    // HasOneThrough Methods
+
+    public function getPatientDoctor(){
+        $patient = Patient::find(1);
+        return $patient->doctor;
+    }
+
+    // HasManyThrough Methods
+
+    public function getCountryDoctor(){
+        $country = Country::find(1);
+        return $country->doctors;
     }
 }
 
