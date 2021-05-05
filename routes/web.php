@@ -45,6 +45,8 @@ Route::group(
             Route::post('update/{offer_id}', 'CrudController@updateOffer')->name('offers.update');
             Route::get('delete/{offer_id}', 'CrudController@delete')->name('offers.delete');
             Route::get('all', 'CrudController@getAllOffers')->name('offers.all');
+            // Routes For Laravel Scopes - Local
+            Route::get('get-all-inactive-offers', 'CrudController@getAllInactiveOffers');
         });
 
         Route::get('youtube', 'CrudController@getVideo')->middleware('auth');
@@ -103,7 +105,9 @@ Route::get('has-one-through', 'RelationsController@getPatientDoctor');
 Route::get('has-many-through', 'RelationsController@getCountryDoctor');
 ###################### End Relations Routes #########################
 
-
+################### Start Accessors & Mutators ###################
+Route::get('accessors', 'RelationsController@getDoctors');
+################### End Accessors & Mutators ###################
 
 
 

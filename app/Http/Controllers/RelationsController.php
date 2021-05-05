@@ -157,6 +157,18 @@ class RelationsController extends Controller
         $country = Country::find(1);
         return $country->doctors;
     }
+
+    // Accessors And Mutators Methods
+
+    public function getDoctors(){
+        $doctors =  Doctor::select('id', 'name', 'gender')->get();
+//        if (isset($doctors) && $doctors->count() > 0){
+//            foreach ($doctors as $doctor){
+//                $doctor->gender = $doctor->gender == 1 ? 'Male' : 'Female';
+//            }
+//        }
+        return $doctors;
+    }
 }
 
 

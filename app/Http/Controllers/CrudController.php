@@ -6,6 +6,7 @@ use App\Events\VideoViewer;
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use App\Models\Video;
+use App\Scopes\OfferScope;
 use App\Traits\OfferTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -131,5 +132,15 @@ class CrudController extends Controller
         $video = Video::first();
         event(new VideoViewer($video));
         return view('video')->with('video', $video);
+    }
+
+    // Laravel Scope Methods - Local Scope
+
+    public function getAllInactiveOffers(){
+        //return Offer::inactive()->get(); // Get All Inactive Status Offers
+        // Global Scope
+        //return Offer::get();
+        // How To Remove Global Scope
+        return Offer::withoutGlobalScope(OfferScope::class)->get();
     }
 }
